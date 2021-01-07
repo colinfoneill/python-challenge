@@ -9,8 +9,8 @@ budget_data_path = os.path.join("Resources", "budget_data.csv")
 with open(budget_data_path, 'r') as csvfile:
     # read the file, specify a delimiter, and store the contents in a variable
     csv_reader = csv.reader(csvfile, delimiter = ',')
-    # skip the header row  
-    next(csv_reader)
+    # skip the header row and store it in a variable
+    csv_header = next(csv_reader)
         
     # initialize total_months variable to 0
     total_months = 0
@@ -18,7 +18,7 @@ with open(budget_data_path, 'r') as csvfile:
     #initialize profit_loss variable to 0
     profit_loss = 0
     
-    # create empty list for months and monthly profit
+    # create empty lists for months and monthly profit
     months = []
     monthly_profit = []
 
@@ -28,16 +28,19 @@ with open(budget_data_path, 'r') as csvfile:
         # add 1 to total months count
         total_months += 1
 
-        #aggregate the profit/loss for each month and store in variable
+        # calculate the total profit/loss and store in variable
         profit_loss = profit_loss + int(row[1])
 
-        #create lists of months and monthly profit as we loop through csv file
+        # add to the lists of months and monthly profit as we loop through each row in the csv file
         months.append(row[0])
         monthly_profit.append(row[1])
-    #initialize change_profit_list to blank
+
+        
+    
+    # create empty list for month over month change in profit
     change_profit_list = []
     
-    #loop through dates and profits and calculate the month over month change in profit
+    # loop through months and profits and calculate the month over month change in profit
     for i in range(1, len(months)):
         change_profit = int(monthly_profit[i]) - int(monthly_profit[i-1])
         change_profit_list.append(change_profit)
@@ -51,11 +54,13 @@ with open(budget_data_path, 'r') as csvfile:
 
     # loop through change_profit_list to find max profit and its corresponding date
     for profit in range(len(change_profit_list)):
+        # find the index of the date that corresponds to the max profit
         date_index = change_profit_list.index(max_profit)
         date_max = months[date_index + 1]
 
     # loop through change_profit_list to find min profit and its corresponding date
     for profit in range(len(change_profit_list)):
+        # find the index of the date that corresponds to the min profit
         date_index = change_profit_list.index(min_profit)
         date_min = months[date_index + 1]
         

@@ -30,7 +30,7 @@ with open(election_data_path, 'r') as csvfile:
         else:
             candidate_votes[candidate] = 1
    
-    # create empty lists for candidate and vote count
+    # create empty lists for candidates and vote count
     candidates = []
     votes = []
 
